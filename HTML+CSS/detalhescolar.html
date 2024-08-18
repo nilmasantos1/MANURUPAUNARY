@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Colar - MANARU PAUNARY</title>
+    <meta name="author" content="NILMA SANTOS">
+    <meta name="keywords" content="MANARU PAUNARY produtos indigenas, artesanato indigena, marketplace de produtos indigenas">
+    <meta name="description" content="E-commerce de Produtos Indígenas">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div id="top-menu">
+        <input type="text" placeholder="Pesquisar produto" aria-label="Pesquisar produto">
+        <a href="login.html" class="btn-top-menu">Entrar</a>
+        <div id="cart-icon" class="cart-icon">
+            <a href="carrinho.html">
+                <img src="img/carrinho.png" alt="Ícone Carrinho de Compras">
+            </a>
+        </div>
+    </div>
+    <header>
+        <img src="img/banner1.png" alt="banner contendo a logo da Loja MANARU PAUNARY">
+    </header>
+    <nav>
+        <a class="a-menu" href="index.html">HOME</a>
+        <div class="dropdown-container">
+            <a class="a-menu" href="#" id="categoria-menu">CATEGORIA <i class="fas fa-caret-down"></i></a>
+            <div class="dropdown-content" id="categoria-dropdown">
+                <a href="brincos.html">Brincos</a>
+                <a href="pulseiras.html">Pulseiras</a>
+                <a href="colares.html">Colares</a>
+                <a href="esculturas.html">Esculturas</a>
+            </div>
+        </div>
+        <a class="a-menu" href="tutorial.html">TUTORIAL</a>
+        <a class="a-menu" href="sobre.html">SOBRE</a>
+    </nav>
+    <div class="product-details-container">
+        <div class="product-gallery margin-bottom-section">
+            <img id="product-main-image" src="img/Colar1.png" alt="Imagem Principal do Colar">
+            <div class="product-thumbnails">
+                <img class="thumbnail active" src="img/Colar1.png" alt="Imagem 1">
+                <img class="thumbnail" src="img/Colar2.png" alt="Imagem 2">
+            </div>
+        </div>
+        <div class="product-info">
+            <h1>Colar</h1>
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" min="1" value="1">
+            <button class="btn-comprar">Comprar</button>
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" required>
+            <button id="calcular-frete">Calcular Frete</button>
+            <div class="product-details">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis semper elit, eu laoreet nulla lobortis ac. Nulla facilisi. Curabitur efficitur, ipsum a varius ultricies, dolor libero varius lectus, vel vehicula lacus neque nec turpis.</p>
+                <p>Suspendisse potenti. Sed vestibulum magna ut ligula convallis efficitur. Nullam ut consequat ligula. Phasellus auctor, nulla vitae mollis fermentum, lorem sem tristique nulla, sit amet vulputate nunc est vel purus.</p>
+                <p>Proin tincidunt dolor nec arcu consequat, sit amet mollis magna varius. Etiam consequat aliquam lorem, a bibendum justo mattis nec. Nulla facilisi. Vivamus vel erat in libero sagittis accumsan sit amet et velit.</p>
+                <p>Quantidade em estoque: <span id="estoque"></span></p>
+            </div>
+        </div>
+    </div>
+    <script >
+        document.addEventListener('DOMContentLoaded', function() {
+    // Atualiza o estoque (se necessário)
+    const estoque = 10; // Exemplo de estoque, substitua com o valor real
+    document.getElementById('estoque').textContent = estoque;
+
+    // Adiciona o evento de clique nas miniaturas
+    document.querySelectorAll('.thumbnail').forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const mainImage = document.getElementById('product-main-image');
+            mainImage.classList.add('blink'); // Adiciona a classe para piscar
+            document.querySelector('.thumbnail.active').classList.remove('active');
+            this.classList.add('active');
+            mainImage.src = this.src;
+
+            // Remove a classe de piscar após a animação
+            setTimeout(() => mainImage.classList.remove('blink'), 1000);
+
+            // Adiciona efeito de balançar à miniatura clicada
+            this.classList.add('shake');
+            setTimeout(() => this.classList.remove('shake'), 500); // Remove o efeito após a animação
+        });
+    });
+
+    document.querySelector('.btn-comprar').addEventListener('click', function() {
+        const quantity = document.querySelector('#quantidade').value;
+        fetch(`/api/cart/add/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quantity })
+        })
+        .then(() => alert('Produto adicionado ao carrinho!'))
+        .catch(error => console.error('Erro ao adicionar produto ao carrinho:', error));
+    });
+
+    document.getElementById('calcular-frete').addEventListener('click', function() {
+        const cep = document.getElementById('cep').value;
+        fetch(`/api/shipping/calculate?cep=${cep}`)
+            .then(response => response.json())
+            .then(data => alert(`Frete estimado: R$ ${data.shippingCost.toFixed(2)}`))
+            .catch(error => console.error('Erro ao calcular frete:', error));
+    });
+});
+
+    </script>
+    <!-- Código criado por Silmara -->
+<footer class="footer-1">
+        <div class="card-footer">
+            <img class="img-footer" src="img/Logo.png" alt="">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3840.261076463559!2d-47.89461067010967!3d-15.737322132583543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a3985ac634e7d%3A0xa46601fe9aa8dcb5!2sAsa%20Norte%20Superquadra%20Norte%20216%20-%20Asa%20Norte%2C%20Bras%C3%ADlia%20-%20DF%2C%2070875-000!5e0!3m2!1spt-BR!2sbr!4v1724013807507!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="texto-footer">
+                <h3>Local da Loja</h3>
+                <p>Endereço: SQN 216 Norte - Brasília</p>
+                <p>Para mais informações entre em contato!</p>
+                <p>Tel: (00) 0000-0000</p>
+               
+                
+               
+            </div>
+        </div>
+</footer>
+<footer class="footer-2">
+    <p>Desenvolvido Nilma Santos , Carlos Mensales e Leandro Rocha &copy; 2024</p> 
+            
+</footer>
+            
+</footer>
+</body>
+</html>
+
+   

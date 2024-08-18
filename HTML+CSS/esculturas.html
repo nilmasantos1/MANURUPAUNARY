@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<title>MANARU PAUNARY</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="NILMA SANTOS" />
+		<meta name="keywords" content="MANARU PAUNARY produtos indigenas, artesanato indigena, marktplace de produtos indigenas" />
+		<meta name="description" content="E-commerce de Produtos Indígenas" />
+		<link rel="stylesheet" type="text/css" href="Style.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  
+		<script src="js/Script.js"></script>
+
+	</head>
+/* código desenvolvido por Nilma */
+<body>
+	<div id="top-menu">
+    	<input type="text" placeholder="Pesquisar produto" />
+    	<a href="login.html" class="btn-top-menu">Entrar</a>
+    	<div id="cart-icon" class="cart-icon">
+        <a href="carrinho.html">
+            <img src="img/carrinho.png" alt="Ícone Carrinho de Compras">
+        </a>
+    </div>
+</div>
+	<header>
+			<img src="img/banner1.png" alt="banner contendo a logo da Loja MANARU PAUNARY"/>
+	</header>
+<nav>
+        <a class="a-menu" href="index.html"> HOME </a>
+        <div class="dropdown-container">
+            <a class="a-menu" href="#" id="categoria-menu"> CATEGORIA <i class="fas fa-caret-down"></i></a> 
+            <div class="dropdown-content" id="categoria-dropdown">
+                <a href="brincos.html">Brincos</a>
+                <a href="pulseiras.html">Pulseiras</a>
+                <a href="colares.html">Colares</a>
+                <a href="esculturas.html">Esculturas</a>
+            </div>
+        </div>
+        <a class="a-menu" href="tutorial.html"> TUTORIAL </a>
+        <a class="a-menu" href="sobre.html"> SOBRE</a>
+    </nav>
+    <main>
+        <section class="pagina-brincos">
+            <h1>Esculturas</h1>
+    		<div class="products-container margin-bottom-section">
+        <div class="product">
+        	<a href="detalhesminiaturacarcara.html?produto=1&nome=Miniatura%20Carcará">
+            <img src="img/Carcara1.png" alt="Carcará" class="product-img">
+            <h3>Miniatura Carcará</h3>
+            <p class="product-price">R$ 20,00</p>
+            <div class="product-controls">
+                <button class="btn-buy" data-produto="1">Comprar</button>
+            </div>
+        </div>
+        <div class="product">
+        	<a href="detalhesminiaturacarcara.html?produto=1&nome=Miniatura%20Carcará">
+            <img src="img/Carcara1.png" alt="Produto 2" class="product-img">
+            <h3>Miniatura Carcará </h3>
+            <p class="product-price">R$ 20,00</p>
+            <div class="product-controls">
+                <button class="btn-buy" data-produto="2">Comprar</button>
+            </div>
+        </div>
+        <div class="product">
+        	<a href="detalhesminiaturacarcara.html?produto=1&nome=Miniatura%20Carcará">
+            <img src="img/Carcara1.png" alt="Produto 3" class="product-img">
+            <h3>Miniatura Carcará </h3>
+            <p class="product-price">R$ 20,00</p>
+            <div class="product-controls">
+                <button class="btn-buy" data-produto="3">Comprar</button>
+            </div>
+        </div>
+        <div class="product">
+        	<a href="detalhesminiaturacarcara.html?produto=1&nome=Miniatura%20Carcará">
+            <img src="img/Carcara1.png" alt="Produto 4" class="product-img">
+            <h3>Miniatura Carcará </h3>
+            <p class="product-price">R$ 20,00</p>
+            <div class="product-controls">
+                <button class="btn-buy" data-produto="4">Comprar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnComprar = document.querySelectorAll('.btn-buy');
+
+            btnComprar.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const produtoIndex = btn.getAttribute('data-produto');
+                    
+                    window.location.href = `carrinho.html?produto=${produtoIndex}`;
+                });
+            });
+        });
+    </script>
+        </section>
+</main>
+
+<!-- Código criado por Silmara -->
+<footer class="footer-1">
+        <div class="card-footer">
+            <img class="img-footer" src="img/Logo.png" alt="">
+            <div class="texto-footer">
+                <h3>Local da Loja</h3>
+                <p>Endereço: SQN 216 Norte - Brasília</p>
+                <p>Para mais informações entre em contato!</p>
+                <p>Tel: (00) 0000-0000</p>
+            </div>
+        </div>
+</footer>
+<footer class="footer-2">
+    <p>Desenvolvido Nilma Santos , Carlos Mensales e Leandro Rocha &copy; 2024</p> 
+
+</body>
+</html>

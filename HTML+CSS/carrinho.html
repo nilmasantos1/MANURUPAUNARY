@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<title>MANARU PAUNARY</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="NILMA SANTOS" />
+		<meta name="keywords" content="MANARU PAUNARY produtos indigenas, artesanato indigena, marktplace de produtos indigenas" />
+		<meta name="description" content="E-commerce de Produtos Indígenas" />
+		<link rel="stylesheet" type="text/css" href="Style.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  
+		<script src="js/Script.js"></script>
+
+	</head>
+
+<body>
+	<div id="top-menu">
+    	<input type="text" placeholder="Pesquisar produto" />
+    	<a href="login.html" class="btn-top-menu">Entrar</a>
+    	<div id="cart-icon" class="cart-icon">
+        <a href="carrinho.html">
+            <img src="img/carrinho.png" alt="Ícone Carrinho de Compras">
+        </a>
+    </div>
+</div>
+	<header>
+			<img src="img/banner1.png" alt="banner contendo a logo da Loja MANARU PAUNARY"/>
+	</header>
+<nav>
+        <a class="a-menu" href="index.html"> HOME </a>
+        <div class="dropdown-container">
+            <a class="a-menu" href="#" id="categoria-menu"> CATEGORIA <i class="fas fa-caret-down"></i></a> 
+            <div class="dropdown-content" id="categoria-dropdown">
+                <a href="brincos.html">Brincos</a>
+                <a href="pulseiras.html">Pulseiras</a>
+                <a href="colares.html">Colares</a>
+                <a href="esculturas.html">Esculturas</a>
+            </div>
+        </div>
+        <a class="a-menu" href="tutorial.html"> TUTORIAL </a>
+        <a class="a-menu" href="sobre.html"> SOBRE</a>
+    </nav>
+  <div class="cart-container margin-bottom-section">
+        <h2 id="cart-heading">Seu Carrinho</h2>
+        <div id="cart-content">
+           
+            <div id="empty-cart-message" class="cart-message">
+                Seu carrinho está vazio.
+            </div>
+
+            <!-- Lista de produtos no carrinho -->
+            <div id="cart-items" class="cart-items">
+              
+            </div>
+
+      
+            <div id="cart-summary">
+                <p id="total-price">Total: R$ 0,00</p>
+                <button id="checkout-btn">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+     <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    const cartContent = document.getElementById('cart-content');
+    const emptyCartMessage = document.getElementById('empty-cart-message');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalPriceElem = document.getElementById('total-price');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    // Função para atualizar o carrinho
+    function updateCart() {
+        fetch('/api/cart') // Substitua pela URL da sua API
+            .then(response => response.json())
+            .then(data => {
+                if (data.items.length === 0) {
+                    emptyCartMessage.style.display = 'block';
+                    cartItemsContainer.style.display = 'none';
+                    totalPriceElem.textContent = 'Total: R$ 0,00';
+                } else {
+                    emptyCartMessage.style.display = 'none';
+                    cartItemsContainer.style.display = 'block';
+                    cartItemsContainer.innerHTML = ''; // Limpar itens antigos
+
+                    let total = 0;
+
+                    data.items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'cart-item';
+                        itemDiv.innerHTML = `
+                            <img src="${item.imageUrl}" alt="${item.name}">
+                            <div class="cart-item-details">
+                                <h3 class="cart-item-name">${item.name}</h3>
+                                <p class="cart-item-price">R$ ${item.price.toFixed(2)}</p>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="remove-btn" data-id="${item.id}">Remover</button>
+                                <button class="increase-btn" data-id="${item.id}">+</button>
+                                <button class="decrease-btn" data-id="${item.id}">-</button>
+                            </div>
+                        `;
+                        cartItemsContainer.appendChild(itemDiv);
+                        total += item.price * item.quantity;
+                    });
+
+                    totalPriceElem.textContent = `Total: R$ ${total.toFixed(2)}`;
+                }
+            });
+    }
+
+    // Função para remover item do carrinho
+    function removeItem(itemId) {
+        fetch(`/api/cart/remove/${itemId}`, { method: 'DELETE' })
+            .then(() => updateCart());
+    }
+
+    // Função para aumentar a quantidade do item
+    function increaseQuantity(itemId) {
+        fetch(`/api/cart/increase/${itemId}`, { method: 'POST' })
+            .then(() => updateCart());
+    }
+
+    // Função para diminuir a quantidade do item
+    function decreaseQuantity(itemId) {
+        fetch(`/api/cart/decrease/${itemId}`, { method: 'POST' })
+            .then(() => updateCart());
+    }
+
+    // Evento para finalizar compra
+    checkoutBtn.addEventListener('click', () => {
+        window.location.href = '/checkout'; // Substitua pela URL da página de checkout
+    });
+
+    // Eventos para botões de controle
+    cartItemsContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-btn')) {
+            const itemId = event.target.getAttribute('data-id');
+            removeItem(itemId);
+        }
+        if (event.target.classList.contains('increase-btn')) {
+            const itemId = event.target.getAttribute('data-id');
+            increaseQuantity(itemId);
+        }
+        if (event.target.classList.contains('decrease-btn')) {
+            const itemId = event.target.getAttribute('data-id');
+            decreaseQuantity(itemId);
+        }
+    });
+
+    // Inicializar carrinho
+    updateCart();
+});
+
+
+    </script>
+<!-- Código criado por Silmara -->
+<footer class="footer-1">
+        <div class="card-footer">
+            <img class="img-footer" src="img/Logo.png" alt="">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3840.261076463559!2d-47.89461067010967!3d-15.737322132583543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a3985ac634e7d%3A0xa46601fe9aa8dcb5!2sAsa%20Norte%20Superquadra%20Norte%20216%20-%20Asa%20Norte%2C%20Bras%C3%ADlia%20-%20DF%2C%2070875-000!5e0!3m2!1spt-BR!2sbr!4v1724013807507!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="texto-footer">
+                <h3>Local da Loja</h3>
+                <p>Endereço: SQN 216 Norte - Brasília</p>
+                <p>Para mais informações entre em contato!</p>
+                <p>Tel: (00) 0000-0000</p>
+               
+                
+               
+            </div>
+        </div>
+</footer>
+<footer class="footer-2">
+    <p>Desenvolvido Nilma Santos , Carlos Mensales e Leandro Rocha &copy; 2024</p> 
+            
+</footer>
+
+
+</body>
+</html>	
